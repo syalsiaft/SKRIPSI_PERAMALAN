@@ -8,8 +8,8 @@ class CreateDataObatTable extends Migration
     public function up()
     {
         Schema::create('data_obat', function (Blueprint $table) {
-            $table->unsignedInteger('id_obat')->primary();// Ini akan menjadi primary key dan auto-increment
-            $table->string('jenis_obat')->unique(); // Menambahkan unique constraint
+            $table->unsignedInteger('id_obat')->primary();//
+            $table->string('jenis_obat')->unique(); // 
             $table->timestamps();
         });
     }
