@@ -9,28 +9,19 @@ class DataPenjualan extends Model
 {
     use HasFactory;
 
-    // Nama tabel
     protected $table = 'data_penjualan';
-
-    // Primary key
     protected $primaryKey = 'id_penjualan';
-
-    // Auto increment
-    public $incrementing = false; // Jika ID tidak auto-increment
-
-    // Tipe data primary key
-    protected $keyType = 'string'; // Atau 'int', sesuai kebutuhan
-
-    // Kolom yang dapat diisi
+    public $incrementing = false;
+    protected $keyType = 'string';
     protected $fillable = [
         'id_obat',
+        'tahun',
         'musim',
         'bulan',
-        'jenis_obat', // Pastikan ini ada jika ingin menyimpan
+        'jenis_obat',
         'total_terjual',
     ];
-
-    // Relasi dengan model DataObat
+    
     public function obat()
     {
         return $this->belongsTo(DataObat::class, 'id_obat', 'id_obat');

@@ -31,8 +31,8 @@
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-light-warning elevation-4">
-            <a href="dashboard" class="brand-link">
-                <img src="../../dist/img/logo.png" alt="PadiPulse" class="brand-image img-circle elevation-3" style="opacity: .9">
+            <a href="{{ route('dashboard') }}" class="brand-link">
+                <img src="{{ asset('dist/img/logo.png') }}" alt="PadiPulse" class="brand-image img-circle elevation-3" style="opacity: .9">
                 <span class="brand-text font-weight-regular">PadiPulse</span>
             </a>
         </aside>
@@ -57,11 +57,11 @@
     </div>
 
     <!-- jQuery -->
-    <script src="../../plugins/jquery/jquery.min.js"></script>
+    <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
-    <script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
-    <script src="../../dist/js/adminlte.min.js"></script>
+    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
     <!-- SweetAlert2 JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -89,5 +89,12 @@
             @endif
         });
     </script>
+
+    <style>
+        #obatSelect {
+            display: block !important;
+            visibility: visible !important;
+        }
+    </style>
 </body>
 </html>

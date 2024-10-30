@@ -30,14 +30,12 @@ class DataObatController extends Controller
 
      public function store(Request $request)
      {
-         // Validasi untuk jenis obat
          $request->validate([
              'jenis_obat' => 'required|unique:data_obat,jenis_obat',
          ], [
              'jenis_obat.unique' => 'Jenis obat sudah terdaftar, silahkan masukkan jenis obat yang lain.'
          ]);
 
-         // Peta ID obat
          $idObatMap = [
              'Moluskisida' => 1,
              'Rodentisida' => 2,
@@ -47,10 +45,8 @@ class DataObatController extends Controller
              'Fungisida' => 6
          ];
 
-         // Dapatkan ID obat berdasarkan jenis obat yang dipilih
          $id_obat = $idObatMap[$request->jenis_obat] ?? null;
 
-         // Simpan data obat ke database
          DataObat::updateOrCreate(
              ['id_obat' => $id_obat],
              ['jenis_obat' => $request->jenis_obat]
@@ -76,7 +72,6 @@ class DataObatController extends Controller
     {
         $data = DataObat::where('id_obat', $id)->first();
 
-        // Cek apakah data ada
         if (!$data) {
             return redirect()->route('obat')->with('error', 'Data Obat tidak ditemukan');
         }
@@ -130,7 +125,7 @@ class DataObatController extends Controller
         case 'Fungisida':
             return 6;
         default:
-            return null; // atau bisa throw exception jika jenis obat tidak valid
+            return null;
     }
 }
 }

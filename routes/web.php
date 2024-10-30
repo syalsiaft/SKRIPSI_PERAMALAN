@@ -1,8 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChartController;
 use App\Http\Controllers\DataObatController;
 use App\Http\Controllers\DataPenjualanController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,9 @@ use App\Http\Controllers\DataPenjualanController;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('Dashboard.index'); // Pastikan jalur file sudah benar
-})->name('dashboard');
+
+//grafik
+Route::get('/chart', [ChartController::class,'index'])->name('chart');
 
 //Data Obat
 Route::get('/obat', [DataObatController::class,'index'])->name('obat');
@@ -34,4 +36,14 @@ Route::post('/penjualan/store',[DataPenjualanController::class, 'store'])->name(
 Route::delete('/penjualan/destroy/{id}',[DataPenjualanController::class, 'destroy'])->name('penjualan.destroy');
 Route::get('/penjualan/Edit/{id}',[DataPenjualanController::class, 'edit'])->name( 'penjualan.edit');
 Route::put('/penjualan/update/{id}',[DataPenjualanController::class, 'update'])->name( 'penjualan.update');
+
+//Login
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login_action']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::get('/dashboard', [ChartController::class, 'index'])->name('dashboard')->middleware('auth');
+
+
+
 

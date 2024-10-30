@@ -7,7 +7,7 @@
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{{ route('penjualan.index') }}">Data Penjualan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('penjualan') }}">Data Penjualan</a></li>
                 <li class="breadcrumb-item active">Edit Data Penjualan</li>
             </ol>
         </div>
@@ -17,7 +17,7 @@
 @section('konten')
     <div class="card mx-3">
         <div class="card-body">
-            <form action="{{ route('penjualan.update', $penjualan->id) }}" method="POST">
+            <form action="{{ route('penjualan.update', $penjualan->id_penjualan) }}" method="POST">
                 @csrf
                 @method('PUT')
 
@@ -33,7 +33,17 @@
                         @endforeach
                     </select>
                 </div>
-
+                <div class="mb-3">
+                    <label for="tahun" class="form-label">Tahun</label>
+                    <select name="tahun" class="form-control" id="tahun" required>
+                        <option disabled>--- Pilih Tahun ---</option>
+                        @for ($tahun = 2015; $tahun <= date('Y'); $tahun++)
+                            <option value="{{ $tahun }}" {{ $penjualan->tahun == $tahun ? 'selected' : '' }}>
+                                {{ $tahun }}
+                            </option>
+                        @endfor
+                    </select>
+                </div>
                 <div class="mb-3">
                     <label for="musim" class="form-label">Musim</label>
                     <select name="musim" class="form-control" id="musim" required>
@@ -61,7 +71,7 @@
                         value="{{ $penjualan->total_terjual }}" required>
                 </div>
 
-                <a href="{{ route('penjualan.index') }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('penjualan') }}" class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
             </form>
         </div>

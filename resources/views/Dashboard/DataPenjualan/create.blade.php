@@ -3,8 +3,6 @@
 @section('header')
     <div class="row mb-2 mx-2 justify-content-between">
         <div class="col-sm-5">
-            <!-- Tambahkan style inline untuk mengubah warna latar belakang dan teks -->
-            <h1 style="background-color: black; color: white; padding: 10px; border-radius: 5px;">Tambah Data Penjualan</h1>
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -22,26 +20,45 @@
                 @csrf
                 <div class="mb-3">
                     <label for="id_obat" class="form-label">Jenis Obat</label>
-                    <select name="id_obat" class="form-control" id="id_obat" required>
+                    <select name="id_obat" class="form-control @error('id_obat') is-invalid @enderror" id="id_obat" required>
                         <option disabled selected>--- Pilih Jenis Obat ---</option>
                         @foreach ($obatList as $obat)
                             <option value="{{ $obat->id_obat }}">{{ $obat->jenis_obat }}</option>
                         @endforeach
                     </select>
+                    @error('id_obat')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="tahun" class="form-label">Tahun</label>
+                    <select name="tahun" class="form-control @error('tahun') is-invalid @enderror" id="tahun" required>
+                        <option disabled selected>--- Pilih Tahun ---</option>
+                        @for ($tahun = 2015; $tahun <= date('Y'); $tahun++)
+                            <option value="{{ $tahun }}">{{ $tahun }}</option>
+                        @endfor
+                    </select>
+                    @error('tahun')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="musim" class="form-label">Musim</label>
-                    <select name="musim" class="form-control" id="musim" required>
+                    <select name="musim" class="form-control @error('musim') is-invalid @enderror" id="musim" required>
                         <option disabled selected>--- Pilih Musim ---</option>
                         <option value="1">Musim Tanam 1</option>
                         <option value="2">Musim Tanam 2</option>
                     </select>
+                    @error('musim')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="bulan" class="form-label">Bulan</label>
-                    <select name="bulan" class="form-control" id="bulan" required>
+                    <select name="bulan" class="form-control @error('bulan') is-invalid @enderror" id="bulan" required>
                         <option disabled selected>--- Pilih Bulan ---</option>
                         <option value="1">Januari</option>
                         <option value="2">Februari</option>
@@ -56,11 +73,17 @@
                         <option value="11">November</option>
                         <option value="12">Desember</option>
                     </select>
+                    @error('bulan')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="total_terjual" class="form-label">Total Terjual</label>
-                    <input type="number" class="form-control" name="total_terjual" id="total_terjual" required>
+                    <input type="number" class="form-control @error('total_terjual') is-invalid @enderror" name="total_terjual" id="total_terjual" required>
+                    @error('total_terjual')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <a href="{{ route('penjualan') }}" class="btn btn-secondary">Kembali</a>

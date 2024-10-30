@@ -8,11 +8,28 @@ use Illuminate\Http\Request;
 
 class DataPenjualanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Menggunakan paginate
-        $penjualan = DataPenjualan::paginate(10);
+        $bulan = $request->input('bulan');
+        $tahun = $request->input('tahun');
+        $jenis_obat = $request->input('jenis_obat');
 
+        $penjualan = DataPenjualan::query();
+
+        if ($bulan) {
+            $penjualan->where('bulan', $bulan);
+        }
+        if ($tahun) {
+            $penjualan->where('tahun', $tahun);
+        }
+        if ($jenis_obat) {
+            $penjualan->where('id_obat', $jenis_obat);
+        }
+
+        //paginate
+        $penjualan = $penjualan->paginate(10);
+
+        // Data jenis obat
         $jenis = [
             1 => "Moluskisida",
             2 => "Rodentisida",
@@ -21,7 +38,9 @@ class DataPenjualanController extends Controller
             5 => "Insektisida",
             6 => "Fungisida"
         ];
-        $bulan = [
+
+        // Data bulan
+        $bulanList = [
             1 => "Januari",
             2 => "Februari",
             3 => "Maret",
@@ -36,8 +55,16 @@ class DataPenjualanController extends Controller
             12 => "Desember"
         ];
 
-        // Mengembalikan view dengan data paginasi yang benar
-        return view('Dashboard.DataPenjualan.index', compact('penjualan', 'bulan', 'jenis'));
+        // Data grafik
+        $chartData = DataPenjualan::selectRaw('bulan, SUM(total_terjual) as total')
+            ->where('id_obat', $jenis_obat)
+            ->groupBy('bulan')
+            ->pluck('total', 'bulan');
+
+        // Daftar obat
+        $obatList = DataObat::all();
+
+        return view('Dashboard.DataPenjualan.index', compact('penjualan', 'bulanList', 'jenis', 'chartData', 'obatList'));
     }
 
     public function create()
@@ -50,23 +77,22 @@ class DataPenjualanController extends Controller
     {
         // Validasi data
         $request->validate([
-            'id_obat' => 'required',
+            'id_obat' => 'required|exists:data_obat,id_obat',
+            'tahun' => 'required|integer|min:2015|max:2025',
             'musim' => 'required|in:1,2',
             'bulan' => 'required|integer|between:1,12',
             'total_terjual' => 'required|integer|min:0',
         ]);
 
-        // Simpan data penjualan
         DataPenjualan::create([
             'id_obat' => $request->id_obat,
+            'tahun' => $request->tahun,
             'musim' => $request->musim,
             'bulan' => $request->bulan,
-            'jenis_obat' => $request->id_obat,
             'total_terjual' => $request->total_terjual,
         ]);
 
-        session()->flash('success', 'Data berhasil disimpan!');
-        return redirect()->route('penjualan');
+        return redirect()->route('penjualan')->with('success', 'Data berhasil disimpan!');
     }
 
     public function show(string $id)
@@ -79,21 +105,28 @@ class DataPenjualanController extends Controller
     {
         $penjualan = DataPenjualan::findOrFail($id);
         $obatList = DataObat::all();
-        return view('penjualan.edit', compact('penjualan', 'obatList'));
+        return view('Dashboard.DataPenjualan.edit', compact('penjualan', 'obatList'));
     }
 
     public function update(Request $request, string $id)
     {
         $request->validate([
             'id_obat' => 'required|exists:data_obat,id_obat',
+            'tahun' => 'required|integer|min:2015|max:2025',
             'musim' => 'required|integer|in:1,2',
             'bulan' => 'required|integer|between:1,12',
-            'jenis_obat' => 'required|integer|between:1,6',
             'total_terjual' => 'required|integer|min:0',
         ]);
 
         $penjualan = DataPenjualan::findOrFail($id);
-        $penjualan->update($request->all());
+        
+        $penjualan->update([
+            'id_obat' => $request->id_obat,
+            'tahun' => $request->tahun,
+            'musim' => $request->musim,
+            'bulan' => $request->bulan,
+            'total_terjual' => $request->total_terjual,
+        ]);
 
         return redirect()->route('penjualan')->with('success', 'Data penjualan berhasil diupdate.');
     }

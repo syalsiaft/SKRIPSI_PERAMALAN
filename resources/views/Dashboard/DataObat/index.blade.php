@@ -53,9 +53,6 @@
                         <td class="text-center">{{ $item->id_obat }}</td>
                         <td class="text-center">{{ $item->jenis_obat }}</td>
                         <td class="text-center">
-                            <a href="{{ route('obat.edit', $item->id_obat) }}" class="btn btn-warning mb-3">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
                             <form action="{{ route('obat.destroy', $item->id_obat) }}" method="POST" class="d-inline"
                                 onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?');">
                                 @csrf
