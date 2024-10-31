@@ -12,7 +12,7 @@ class LoginController extends Controller
 
     public function index()
     {
-        return view('Auth.login');
+        return view('pages.login.index');
     }
 
     public function login_action(Request $request)

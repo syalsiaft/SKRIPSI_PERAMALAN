@@ -11,10 +11,10 @@ class DataPenjualan extends Model
 
     protected $table = 'data_penjualan';
     protected $primaryKey = 'id_penjualan';
-    public $incrementing = false;
-    protected $keyType = 'string';
+    // public $incrementing = false;
+    // protected $keyType = 'string';
     protected $fillable = [
-        'id_obat',
+        // 'id_obat',
         'tahun',
         'musim',
         'bulan',
@@ -24,6 +24,6 @@ class DataPenjualan extends Model
     
     public function obat()
     {
-        return $this->belongsTo(DataObat::class, 'id_obat', 'id_obat');
+        return $this->belongsTo(DataObat::class, 'jenis_obat', 'id_obat');
     }
 }

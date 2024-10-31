@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataObatController;
 use App\Http\Controllers\DataPenjualanController;
 use App\Http\Controllers\LoginController;
@@ -18,32 +19,21 @@ use App\Http\Controllers\LoginController;
 */
 
 
-//grafik
-Route::get('/chart', [ChartController::class,'index'])->name('chart');
+
+Route::get('/', function () {
+    return view('pages.login.index');
+});
+Route::resource('dashboard', DashboardController::class)->middleware('auth');
+//update chart filter
+Route::get('/chart/{id_obat}/{tahun}', [DashboardController::class, 'getChartData']);
 
 //Data Obat
-Route::get('/obat', [DataObatController::class,'index'])->name('obat');
-Route::get('/obat/create',[DataObatController::class, 'create'])->name( 'obat.create');
-Route::post('/obat/store',[DataObatController::class, 'store'])->name( 'obat.store');
-Route::delete('/obat/destroy/{id}',[DataObatController::class, 'destroy'])->name('obat.destroy');
-Route::get('/obat/Edit/{id}',[DataObatController::class, 'edit'])->name( 'obat.edit');
-Route::put('/obat/update/{id}',[DataObatController::class, 'update'])->name( 'obat.update');
+Route::resource('obat', DataObatController::class)->middleware('auth');
 
 //Data Penjualan
-Route::get('/penjualan', [DataPenjualanController::class,'index'])->name('penjualan');
-Route::get('/penjualan/create',[DataPenjualanController::class, 'create'])->name( 'penjualan.create');
-Route::post('/penjualan/store',[DataPenjualanController::class, 'store'])->name( 'penjualan.store');
-Route::delete('/penjualan/destroy/{id}',[DataPenjualanController::class, 'destroy'])->name('penjualan.destroy');
-Route::get('/penjualan/Edit/{id}',[DataPenjualanController::class, 'edit'])->name( 'penjualan.edit');
-Route::put('/penjualan/update/{id}',[DataPenjualanController::class, 'update'])->name( 'penjualan.update');
+Route::resource('penjualan', DataPenjualanController::class)->middleware('auth');
 
 //Login
 Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'login_action']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::get('/dashboard', [ChartController::class, 'index'])->name('dashboard')->middleware('auth');
-
-
-
-

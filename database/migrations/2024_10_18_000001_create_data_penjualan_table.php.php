@@ -10,13 +10,14 @@ class CreateDataPenjualanTable extends Migration
     {
         Schema::create('data_penjualan', function (Blueprint $table) {
             $table->id('id_penjualan');//(primary key)
-            $table->unsignedBigInteger('id_obat'); //foreign key
             $table->integer('tahun');
             $table->integer('musim');
             $table->integer('bulan');
-            $table->integer('jenis_obat');
+            $table->unsignedBigInteger('jenis_obat');
             $table->integer('total_terjual');
             $table->timestamps();
+
+            $table->foreign('jenis_obat')->references('id_obat')->on('data_obat')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

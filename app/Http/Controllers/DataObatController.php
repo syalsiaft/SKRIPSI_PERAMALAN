@@ -13,7 +13,7 @@ class DataObatController extends Controller
     public function index()
     {
         $data = DataObat::distinct('jenis_obat')->get();
-        return view('Dashboard.DataObat.index', compact('data'));
+        return view('pages.data-obat.index', compact('data'));
     }
 
     /**
@@ -21,7 +21,7 @@ class DataObatController extends Controller
      */
     public function create()
     {
-        return view('Dashboard.DataObat.create');
+        return view('pages.data-obat.create');
     }
 
     /**
@@ -52,10 +52,8 @@ class DataObatController extends Controller
              ['jenis_obat' => $request->jenis_obat]
          );
          session()->flash('success', 'Data berhasil disimpan!');
-         return redirect()->route('obat');
+         return redirect()->route('obat.index');
      }
-
-
 
     /**
      * Display the specified resource.
@@ -76,7 +74,7 @@ class DataObatController extends Controller
             return redirect()->route('obat')->with('error', 'Data Obat tidak ditemukan');
         }
 
-        return view('Dashboard.DataObat.edit')->with('data', $data);
+        return view('pages.data-obat.edit')->with('data', $data);
     }
 
     /**
@@ -94,7 +92,7 @@ class DataObatController extends Controller
             'jenis_obat' => $request->jenis_obat,
         ]);
 
-        return redirect()->route('obat')->with('success', 'Data obat berhasil diupdate.');
+        return redirect()->route('obat.index')->with('success', 'Data obat berhasil diupdate.');
     }
 
     /**
@@ -103,7 +101,7 @@ class DataObatController extends Controller
     public function destroy(string $id)
     {
         DataObat::where('id_obat', $id)->delete();
-        return redirect()->route('obat')->with('success', 'Berhasil Melakukan Delete Data');
+        return redirect()->route('obat.index')->with('success', 'Berhasil Melakukan Delete Data');
     }
 
     /**

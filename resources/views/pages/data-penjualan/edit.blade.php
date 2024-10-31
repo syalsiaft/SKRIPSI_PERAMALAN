@@ -1,4 +1,4 @@
-@extends('Dashboard.layout.dash-layout')
+@extends('layouts.main')
 
 @section('header')
     <div class="row mb-2 mx-2 justify-content-between">
@@ -7,23 +7,21 @@
         </div>
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item"><a href="{{ route('penjualan') }}">Data Penjualan</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('penjualan.index') }}">Data Penjualan</a></li>
                 <li class="breadcrumb-item active">Edit Data Penjualan</li>
             </ol>
         </div>
     </div>
 @endsection
 
-@section('konten')
-    <div class="card mx-3">
-        <div class="card-body">
+@section('content')
             <form action="{{ route('penjualan.update', $penjualan->id_penjualan) }}" method="POST">
                 @csrf
                 @method('PUT')
 
                 <div class="mb-3">
-                    <label for="id_obat" class="form-label">Jenis Obat</label>
-                    <select name="id_obat" class="form-control" id="id_obat" required>
+                    <label for="jenis_obat" class="form-label">Jenis Obat</label>
+                    <select name="jenis_obat" class="form-control" id="jenis_obat" required>
                         <option disabled>--- Pilih Jenis Obat ---</option>
                         @foreach ($obatList as $obat)
                             <option value="{{ $obat->id_obat }}"
@@ -71,9 +69,7 @@
                         value="{{ $penjualan->total_terjual }}" required>
                 </div>
 
-                <a href="{{ route('penjualan') }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('penjualan.index') }}" class="btn btn-secondary">Kembali</a>
                 <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
             </form>
-        </div>
-    </div>
 @endsection

@@ -1,4 +1,4 @@
-@extends('Dashboard.layout.dash-layout')
+@extends('layouts.main')
 
 @section('header')
     <div class="row mb-2 mx-2 justify-content-between">
@@ -25,7 +25,7 @@
     </div>
 @endsection
 
-@section('konten')
+@section('content')
     @if ($message = Session::get('success'))
         <script>
             // Notifikasi

@@ -1,4 +1,5 @@
-@extends('Dashboard.layout.dash-layout')
+@extends('layouts.main')
+
 @section('header')
     <div class="row mb-2 mx-2 justify-content-between">
         <div class="col-sm-5">
@@ -12,7 +13,7 @@
     </div>
 @endsection
 
-@section('konten')
+@section('content')
     <form action="{{ route('obat.update', $data->id_obat) }}" method="POST">
         @csrf
         @method('PUT')

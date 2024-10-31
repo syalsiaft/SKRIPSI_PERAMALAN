@@ -12,7 +12,7 @@ class DataObat extends Model
     protected $table = 'data_obat';
     protected $primaryKey = 'id_obat';
     public $incrementing = false;
-    protected $keyType = 'string';
+    // protected $keyType = 'string';
 
     protected $fillable = ['id_obat', 'jenis_obat']; 
 }
