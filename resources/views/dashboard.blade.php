@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,16 +15,18 @@
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
+
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
         <!-- Navbar -->
         <nav class="main-header navbar navbar-expand navbar-white navbar-light">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i
+                            class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{{ route('dashboard') }}" class="nav-link">Beranda</a>
+                    <a href="{{ route('dashboard.index') }}" class="nav-link">Beranda</a>
                 </li>
             </ul>
         </nav>
@@ -31,8 +34,9 @@
 
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-light-warning elevation-4">
-            <a href="{{ route('dashboard') }}" class="brand-link">
-                <img src="{{ asset('dist/img/logo.png') }}" alt="PadiPulse" class="brand-image img-circle elevation-3" style="opacity: .9">
+            <a href="{{ route('dashboard.index') }}" class="brand-link">
+                <img src="{{ asset('dist/img/logo.png') }}" alt="PadiPulse" class="brand-image img-circle elevation-3"
+                    style="opacity: .9">
                 <span class="brand-text font-weight-regular">PadiPulse</span>
             </a>
         </aside>
@@ -97,4 +101,5 @@
         }
     </style>
 </body>
+
 </html>
